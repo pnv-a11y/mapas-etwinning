@@ -748,6 +748,10 @@
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
     }
+    function getCommunityKey(value) {
+  const normalized = normalizeName(value);
+  return alias[normalized] || normalized;
+}
 
     function getCommunityName(feature) {
       const p = feature.properties || {};
@@ -755,8 +759,7 @@
     }
 
     function getResourceSet(name) {
-  const normalized = normalizeName(name);
-  const key = alias[normalized] || normalized;
+  const key = getCommunityKey(name);
   const item = resourcesByCommunity[key];
 
   if (item && item.resources) {
@@ -769,7 +772,6 @@
     en: { label: "Inglés", flag: "🇬🇧", url: "./recursos/pendiente.html", type: "Pendiente", available: false }
   };
 }
-
     const viewerBackdrop = document.getElementById("viewerBackdrop");
     const viewerFrame = document.getElementById("viewerFrame");
     const viewerTitle = document.getElementById("viewerTitle");
@@ -841,9 +843,8 @@
       setButton(btnEn, resources.en, "Inglés", name);
 
       svg.selectAll(".region")
-        .classed("is-active", d => normalizeName(getCommunityName(d)) === key)
-        .attr("aria-pressed", d => normalizeName(getCommunityName(d)) === key ? "true" : "false");
-
+  .classed("is-active", d => getCommunityKey(getCommunityName(d)) === key)
+  .attr("aria-pressed", d => getCommunityKey(getCommunityName(d)) === key ? "true" : "false");
       if (moveFocusToPanel) btnEs.focus({ preventScroll: false });
     }
 
@@ -851,7 +852,7 @@
       const ordered = [...features].sort((a, b) => getCommunityName(a).localeCompare(getCommunityName(b), "es"));
       communitySelect.innerHTML = '<option value="">Seleccione una comunidad autónoma</option>';
       ordered.forEach(feature => {
-        const key = normalizeName(getCommunityName(feature));
+       const key = getCommunityKey(getCommunityName(feature));
         const option = document.createElement("option");
         option.value = key;
         option.textContent = getCommunityName(feature);
@@ -874,15 +875,13 @@
         .attr("fill", (d, i) => communityColors[(i + colorOffset) % communityColors.length])
         .attr("tabindex", 0)
         .attr("role", "button")
-        .attr("aria-pressed", d => normalizeName(getCommunityName(d)) === activeKey ? "true" : "false")
-        .attr("aria-label", d => `Seleccionar ${getCommunityName(d)} y mostrar sus recursos`)
-        .classed("is-active", d => normalizeName(getCommunityName(d)) === activeKey)
-        .on("click", (event, d) => setSelectedCommunity(normalizeName(getCommunityName(d)), false))
+       .attr("aria-pressed", d => getCommunityKey(getCommunityName(d)) === activeKey ? "true" : "false")        .attr("aria-label", d => `Seleccionar ${getCommunityName(d)} y mostrar sus recursos`)
+        .classed("is-active", d => getCommunityKey(getCommunityName(d)) === activeKey)
+        .on("click", (event, d) => setSelectedCommunity(getCommunityKey(getCommunityName(d)), false))
         .on("keydown", (event, d) => {
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            setSelectedCommunity(normalizeName(getCommunityName(d)), true);
-          }
+            setSelectedCommunity(getCommunityKey(getCommunityName(d)), true);          }
         });
 
       group.selectAll("text")
@@ -915,12 +914,10 @@
       }
 
       features = geojson.features || [];
-      featureByKey = new Map(features.map(feature => [normalizeName(getCommunityName(feature)), feature]));
-      createSelectOptions();
+      featureByKey = new Map(features.map(feature => [getCommunityKey(getCommunityName(feature)), feature]));      createSelectOptions();
 
-      const canaryFeatures = features.filter(d => normalizeName(getCommunityName(d)) === "canarias");
-      const mainFeatures = features.filter(d => normalizeName(getCommunityName(d)) !== "canarias");
-      const mainCollection = { type: "FeatureCollection", features: mainFeatures };
+      const canaryFeatures = features.filter(d => getCommunityKey(getCommunityName(d)) === "canarias");
+      const mainFeatures = features.filter(d => getCommunityKey(getCommunityName(d)) !== "canarias");      const mainCollection = { type: "FeatureCollection", features: mainFeatures };
       const canaryCollection = { type: "FeatureCollection", features: canaryFeatures };
 
       /*
