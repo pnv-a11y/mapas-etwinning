@@ -480,7 +480,7 @@
     const resourcesByCommunity = {
       "andalucia": {
         display: "Andalucía",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/andalucia-es.pdf", type: "PDF", available: true },
         it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
         en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
       },
@@ -492,7 +492,7 @@
       },
       "asturias": {
         display: "Asturias",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/asturias-es.pdf", type: "PDF", available: true },
         it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
         en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
       },
@@ -510,25 +510,25 @@
       },
       "cantabria": {
         display: "Cantabria",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
-        it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/cantabria-es.pdf", type: "PDF", available: true },
+        it: { url: "./recursos/cantabria-it.pdf", type: "PDF", available: true },
         en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
       },
       "castilla-y-leon": {
         display: "Castilla y León",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
-        it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
-        en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
+        es: { url: "./recursos/castilla-leon-es.pdf", type: "PDF", available: true },
+        it: { url: "./recursos/castilla-leon-it.pdf", type: "PDF", available: true },
+        en: { url: "./recursos/castilla-leon-en.pdf", type: "PDF", available: true }
       },
       "castilla-la-mancha": {
         display: "Castilla-La Mancha",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/castilla-la-mancha-es.pdf", type: "PDF", available: true },
         it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
         en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
       },
       "cataluna": {
         display: "Cataluña",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/cataluna-es.pdf", type: "PDF", available: true },
         it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
         en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
       },
@@ -558,7 +558,7 @@
       },
       "comunidad-de-madrid": {
         display: "Comunidad de Madrid",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/madrid-es.pdf", type: "PDF", available: true },
         it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
         en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
       },
@@ -582,9 +582,9 @@
       },
       "ceuta": {
         display: "Ceuta",
-        es: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
+        es: { url: "./recursos/ceuta-es.pdf", type: "PDF", available: true },
         it: { url: "./recursos/pendiente.html", type: "Pendiente", available: false },
-        en: { url: "./recursos/pendiente.html", type: "Pendiente", available: false }
+        en: { url: "./recursos/ceuta-en.pdf", type: "PDF", available: true }
       },
       "melilla": {
         display: "Melilla",
@@ -836,7 +836,7 @@
           .attr("class", "inset-title")
           .attr("x", insetX + 14)
           .attr("y", insetY + 23)
-          .text("Islas Canarias");
+          .text("Canarias · recuadro independiente");
 
         const canaryProjection = d3.geoMercator().fitExtent(
           [[insetX + 16, insetY + 36], [insetX + insetW - 16, insetY + insetH - 16]],
