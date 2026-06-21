@@ -709,7 +709,7 @@
   resources: {
     es: { label: "Español", flag: "🇪🇸", url: "./recursos/pendiente.html", type: "Pendiente", available: false },
     it: { label: "Italiano", flag: "🇮🇹", url: "./recursos/melilla-it.pdf", type: "PDF", available: true },
-    en: { label: "Inglés", flag: "🇬🇧", url: "./recursos/melilla-en.pfd",  type: "PDF", available: true }
+    en: { label: "Inglés", flag: "🇬🇧", url: "./recursos/melilla-en.pdf",  type: "PDF", available: true }
   }
 }
     };
@@ -817,11 +817,33 @@
   const normalized = normalizeName(value);
   return alias[normalized] || normalized;
 }
+const displayNames = {
+  "aragon": "Aragón",
+  "andalucia": "Andalucía",
+  "castilla-y-leon": "Castilla y León",
+  "cataluna": "Cataluña",
+  "pais-vasco": "País Vasco"
+};
 
-    function getCommunityName(feature) {
-      const p = feature.properties || {};
-      return p.name || p.NAME_1 || p.NAMEUNIT || p.ccaa || p.comunidad || p.acom_name || p.nombre || "Comunidad autónoma";
-    }
+    
+    
+function getCommunityName(feature) {
+  const p = feature.properties || {};
+
+  const rawName =
+    p.name ||
+    p.NAME_1 ||
+    p.NAMEUNIT ||
+    p.ccaa ||
+    p.comunidad ||
+    p.acom_name ||
+    p.nombre ||
+    "Comunidad autónoma";
+
+  const key = getCommunityKey(rawName);
+
+  return displayNames[key] || rawName;
+}
 
     function getResourceSet(name) {
   const key = getCommunityKey(name);
